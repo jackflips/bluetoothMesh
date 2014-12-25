@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD017A651A4811A500A50E6A /* ReadData.m in Sources */ = {isa = PBXBuildFile; fileRef = AD017A641A4811A500A50E6A /* ReadData.m */; };
+		AD017A681A481F2600A50E6A /* WriteData.m in Sources */ = {isa = PBXBuildFile; fileRef = AD017A671A481F2600A50E6A /* WriteData.m */; };
+		AD7485BD1A4BEF5D005DFFC9 /* CentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */; };
+		AD7485C01A4BFCB6005DFFC9 /* Connections.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7485BF1A4BFCB6005DFFC9 /* Connections.m */; };
+		AD996FCB1A418B9D009C27AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FCA1A418B9D009C27AF /* main.m */; };
+		AD996FCE1A418B9D009C27AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FCD1A418B9D009C27AF /* AppDelegate.m */; };
+		AD996FD11A418B9E009C27AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FD01A418B9E009C27AF /* ViewController.m */; };
+		AD996FD41A418B9E009C27AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD996FD21A418B9E009C27AF /* Main.storyboard */; };
+		AD996FD61A418B9E009C27AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD996FD51A418B9E009C27AF /* Images.xcassets */; };
+		AD996FD91A418B9E009C27AF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD996FD71A418B9E009C27AF /* LaunchScreen.xib */; };
+		AD996FE51A418B9E009C27AF /* peripheralAntennaTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */; };
+		AD996FEF1A418BB5009C27AF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */; };
+		ADD663B31A4A0FD500E1BD9D /* ConnectedDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD996FDF1A418B9E009C27AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD996FBD1A418B9D009C27AF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD996FC41A418B9D009C27AF;
+			remoteInfo = peripheralAntennaTest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD017A631A4811A500A50E6A /* ReadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadData.h; path = ../ReadData.h; sourceTree = "<group>"; };
+		AD017A641A4811A500A50E6A /* ReadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadData.m; path = ../ReadData.m; sourceTree = "<group>"; };
+		AD017A661A481F2600A50E6A /* WriteData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WriteData.h; sourceTree = "<group>"; };
+		AD017A671A481F2600A50E6A /* WriteData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteData.m; sourceTree = "<group>"; };
+		AD7485BB1A4BEF5D005DFFC9 /* CentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CentralManager.h; sourceTree = "<group>"; };
+		AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CentralManager.m; sourceTree = "<group>"; };
+		AD7485BE1A4BFCB5005DFFC9 /* Connections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connections.h; sourceTree = "<group>"; };
+		AD7485BF1A4BFCB6005DFFC9 /* Connections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connections.m; sourceTree = "<group>"; };
+		AD996FC51A418B9D009C27AF /* peripheralAntennaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = peripheralAntennaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD996FC91A418B9D009C27AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD996FCA1A418B9D009C27AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AD996FCC1A418B9D009C27AF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AD996FCD1A418B9D009C27AF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AD996FCF1A418B9E009C27AF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		AD996FD01A418B9E009C27AF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AD996FD31A418B9E009C27AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AD996FD51A418B9E009C27AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AD996FD81A418B9E009C27AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		AD996FDE1A418B9E009C27AF /* peripheralAntennaTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = peripheralAntennaTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD996FE31A418B9E009C27AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = peripheralAntennaTestTests.m; sourceTree = "<group>"; };
+		AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		ADD663B11A4A0FD500E1BD9D /* ConnectedDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectedDevice.h; sourceTree = "<group>"; };
+		ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectedDevice.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD996FC21A418B9D009C27AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD996FEF1A418BB5009C27AF /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD996FDB1A418B9E009C27AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD996FBC1A418B9D009C27AF = {
+			isa = PBXGroup;
+			children = (
+				AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */,
+				AD996FC71A418B9D009C27AF /* peripheralAntennaTest */,
+				AD996FE11A418B9E009C27AF /* peripheralAntennaTestTests */,
+				AD996FC61A418B9D009C27AF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD996FC61A418B9D009C27AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD996FC51A418B9D009C27AF /* peripheralAntennaTest.app */,
+				AD996FDE1A418B9E009C27AF /* peripheralAntennaTestTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD996FC71A418B9D009C27AF /* peripheralAntennaTest */ = {
+			isa = PBXGroup;
+			children = (
+				AD7485BE1A4BFCB5005DFFC9 /* Connections.h */,
+				AD7485BF1A4BFCB6005DFFC9 /* Connections.m */,
+				ADD663B11A4A0FD500E1BD9D /* ConnectedDevice.h */,
+				ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */,
+				AD017A631A4811A500A50E6A /* ReadData.h */,
+				AD017A641A4811A500A50E6A /* ReadData.m */,
+				AD017A661A481F2600A50E6A /* WriteData.h */,
+				AD017A671A481F2600A50E6A /* WriteData.m */,
+				AD7485BB1A4BEF5D005DFFC9 /* CentralManager.h */,
+				AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */,
+				AD996FCC1A418B9D009C27AF /* AppDelegate.h */,
+				AD996FCD1A418B9D009C27AF /* AppDelegate.m */,
+				AD996FCF1A418B9E009C27AF /* ViewController.h */,
+				AD996FD01A418B9E009C27AF /* ViewController.m */,
+				AD996FD21A418B9E009C27AF /* Main.storyboard */,
+				AD996FD51A418B9E009C27AF /* Images.xcassets */,
+				AD996FD71A418B9E009C27AF /* LaunchScreen.xib */,
+				AD996FC81A418B9D009C27AF /* Supporting Files */,
+			);
+			path = peripheralAntennaTest;
+			sourceTree = "<group>";
+		};
+		AD996FC81A418B9D009C27AF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD996FC91A418B9D009C27AF /* Info.plist */,
+				AD996FCA1A418B9D009C27AF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AD996FE11A418B9E009C27AF /* peripheralAntennaTestTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */,
+				AD996FE21A418B9E009C27AF /* Supporting Files */,
+			);
+			path = peripheralAntennaTestTests;
+			sourceTree = "<group>";
+		};
+		AD996FE21A418B9E009C27AF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD996FE31A418B9E009C27AF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD996FC41A418B9D009C27AF /* peripheralAntennaTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD996FE81A418B9E009C27AF /* Build configuration list for PBXNativeTarget "peripheralAntennaTest" */;
+			buildPhases = (
+				AD996FC11A418B9D009C27AF /* Sources */,
+				AD996FC21A418B9D009C27AF /* Frameworks */,
+				AD996FC31A418B9D009C27AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = peripheralAntennaTest;
+			productName = peripheralAntennaTest;
+			productReference = AD996FC51A418B9D009C27AF /* peripheralAntennaTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD996FDD1A418B9E009C27AF /* peripheralAntennaTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD996FEB1A418B9E009C27AF /* Build configuration list for PBXNativeTarget "peripheralAntennaTestTests" */;
+			buildPhases = (
+				AD996FDA1A418B9E009C27AF /* Sources */,
+				AD996FDB1A418B9E009C27AF /* Frameworks */,
+				AD996FDC1A418B9E009C27AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD996FE01A418B9E009C27AF /* PBXTargetDependency */,
+			);
+			name = peripheralAntennaTestTests;
+			productName = peripheralAntennaTestTests;
+			productReference = AD996FDE1A418B9E009C27AF /* peripheralAntennaTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD996FBD1A418B9D009C27AF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = jackrogers;
+				TargetAttributes = {
+					AD996FC41A418B9D009C27AF = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = F24HVJVBZE;
+					};
+					AD996FDD1A418B9E009C27AF = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = AD996FC41A418B9D009C27AF;
+					};
+				};
+			};
+			buildConfigurationList = AD996FC01A418B9D009C27AF /* Build configuration list for PBXProject "peripheralAntennaTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD996FBC1A418B9D009C27AF;
+			productRefGroup = AD996FC61A418B9D009C27AF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD996FC41A418B9D009C27AF /* peripheralAntennaTest */,
+				AD996FDD1A418B9E009C27AF /* peripheralAntennaTestTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD996FC31A418B9D009C27AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD996FD41A418B9E009C27AF /* Main.storyboard in Resources */,
+				AD996FD91A418B9E009C27AF /* LaunchScreen.xib in Resources */,
+				AD996FD61A418B9E009C27AF /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD996FDC1A418B9E009C27AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD996FC11A418B9D009C27AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD996FD11A418B9E009C27AF /* ViewController.m in Sources */,
+				AD017A681A481F2600A50E6A /* WriteData.m in Sources */,
+				AD996FCE1A418B9D009C27AF /* AppDelegate.m in Sources */,
+				AD7485C01A4BFCB6005DFFC9 /* Connections.m in Sources */,
+				AD7485BD1A4BEF5D005DFFC9 /* CentralManager.m in Sources */,
+				ADD663B31A4A0FD500E1BD9D /* ConnectedDevice.m in Sources */,
+				AD017A651A4811A500A50E6A /* ReadData.m in Sources */,
+				AD996FCB1A418B9D009C27AF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD996FDA1A418B9E009C27AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD996FE51A418B9E009C27AF /* peripheralAntennaTestTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD996FE01A418B9E009C27AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD996FC41A418B9D009C27AF /* peripheralAntennaTest */;
+			targetProxy = AD996FDF1A418B9E009C27AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AD996FD21A418B9E009C27AF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD996FD31A418B9E009C27AF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AD996FD71A418B9E009C27AF /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD996FD81A418B9E009C27AF /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AD996FE61A418B9E009C27AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD996FE71A418B9E009C27AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD996FE91A418B9E009C27AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = peripheralAntennaTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		AD996FEA1A418B9E009C27AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = peripheralAntennaTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		AD996FEC1A418B9E009C27AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = peripheralAntennaTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peripheralAntennaTest.app/peripheralAntennaTest";
+			};
+			name = Debug;
+		};
+		AD996FED1A418B9E009C27AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = peripheralAntennaTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peripheralAntennaTest.app/peripheralAntennaTest";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD996FC01A418B9D009C27AF /* Build configuration list for PBXProject "peripheralAntennaTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD996FE61A418B9E009C27AF /* Debug */,
+				AD996FE71A418B9E009C27AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD996FE81A418B9E009C27AF /* Build configuration list for PBXNativeTarget "peripheralAntennaTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD996FE91A418B9E009C27AF /* Debug */,
+				AD996FEA1A418B9E009C27AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD996FEB1A418B9E009C27AF /* Build configuration list for PBXNativeTarget "peripheralAntennaTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD996FEC1A418B9E009C27AF /* Debug */,
+				AD996FED1A418B9E009C27AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD996FBD1A418B9D009C27AF /* Project object */;
+}
