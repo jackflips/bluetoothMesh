@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "ReadData.h"
 #import "WriteData.h"
+#import "Connections.h"
 
 @interface CentralManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) dispatch_queue_t centralQueue;
+@property (strong, nonatomic) NSMutableArray *writeSendQueue;
+@property (nonatomic) BOOL writeReadyToUpdate;
+
++ (instancetype)sharedManager;
 
 @end

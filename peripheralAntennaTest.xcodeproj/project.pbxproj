@@ -11,6 +11,7 @@
 		AD017A681A481F2600A50E6A /* WriteData.m in Sources */ = {isa = PBXBuildFile; fileRef = AD017A671A481F2600A50E6A /* WriteData.m */; };
 		AD7485BD1A4BEF5D005DFFC9 /* CentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */; };
 		AD7485C01A4BFCB6005DFFC9 /* Connections.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7485BF1A4BFCB6005DFFC9 /* Connections.m */; };
+		AD7485C61A4CAA6C005DFFC9 /* PeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7485C51A4CAA6C005DFFC9 /* PeripheralManager.m */; };
 		AD996FCB1A418B9D009C27AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FCA1A418B9D009C27AF /* main.m */; };
 		AD996FCE1A418B9D009C27AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FCD1A418B9D009C27AF /* AppDelegate.m */; };
 		AD996FD11A418B9E009C27AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FD01A418B9E009C27AF /* ViewController.m */; };
@@ -19,7 +20,7 @@
 		AD996FD91A418B9E009C27AF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD996FD71A418B9E009C27AF /* LaunchScreen.xib */; };
 		AD996FE51A418B9E009C27AF /* peripheralAntennaTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */; };
 		AD996FEF1A418BB5009C27AF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */; };
-		ADD663B31A4A0FD500E1BD9D /* ConnectedDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */; };
+		ADD663B31A4A0FD500E1BD9D /* Peer.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD663B21A4A0FD500E1BD9D /* Peer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,8 @@
 		AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CentralManager.m; sourceTree = "<group>"; };
 		AD7485BE1A4BFCB5005DFFC9 /* Connections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connections.h; sourceTree = "<group>"; };
 		AD7485BF1A4BFCB6005DFFC9 /* Connections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connections.m; sourceTree = "<group>"; };
+		AD7485C41A4CAA6C005DFFC9 /* PeripheralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralManager.h; sourceTree = "<group>"; };
+		AD7485C51A4CAA6C005DFFC9 /* PeripheralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralManager.m; sourceTree = "<group>"; };
 		AD996FC51A418B9D009C27AF /* peripheralAntennaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = peripheralAntennaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD996FC91A418B9D009C27AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD996FCA1A418B9D009C27AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -55,8 +58,8 @@
 		AD996FE31A418B9E009C27AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = peripheralAntennaTestTests.m; sourceTree = "<group>"; };
 		AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		ADD663B11A4A0FD500E1BD9D /* ConnectedDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectedDevice.h; sourceTree = "<group>"; };
-		ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectedDevice.m; sourceTree = "<group>"; };
+		ADD663B11A4A0FD500E1BD9D /* Peer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Peer.h; sourceTree = "<group>"; };
+		ADD663B21A4A0FD500E1BD9D /* Peer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Peer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,14 +105,16 @@
 			children = (
 				AD7485BE1A4BFCB5005DFFC9 /* Connections.h */,
 				AD7485BF1A4BFCB6005DFFC9 /* Connections.m */,
-				ADD663B11A4A0FD500E1BD9D /* ConnectedDevice.h */,
-				ADD663B21A4A0FD500E1BD9D /* ConnectedDevice.m */,
+				ADD663B11A4A0FD500E1BD9D /* Peer.h */,
+				ADD663B21A4A0FD500E1BD9D /* Peer.m */,
 				AD017A631A4811A500A50E6A /* ReadData.h */,
 				AD017A641A4811A500A50E6A /* ReadData.m */,
 				AD017A661A481F2600A50E6A /* WriteData.h */,
 				AD017A671A481F2600A50E6A /* WriteData.m */,
 				AD7485BB1A4BEF5D005DFFC9 /* CentralManager.h */,
 				AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */,
+				AD7485C41A4CAA6C005DFFC9 /* PeripheralManager.h */,
+				AD7485C51A4CAA6C005DFFC9 /* PeripheralManager.m */,
 				AD996FCC1A418B9D009C27AF /* AppDelegate.h */,
 				AD996FCD1A418B9D009C27AF /* AppDelegate.m */,
 				AD996FCF1A418B9E009C27AF /* ViewController.h */,
@@ -253,8 +258,9 @@
 				AD017A681A481F2600A50E6A /* WriteData.m in Sources */,
 				AD996FCE1A418B9D009C27AF /* AppDelegate.m in Sources */,
 				AD7485C01A4BFCB6005DFFC9 /* Connections.m in Sources */,
+				AD7485C61A4CAA6C005DFFC9 /* PeripheralManager.m in Sources */,
 				AD7485BD1A4BEF5D005DFFC9 /* CentralManager.m in Sources */,
-				ADD663B31A4A0FD500E1BD9D /* ConnectedDevice.m in Sources */,
+				ADD663B31A4A0FD500E1BD9D /* Peer.m in Sources */,
 				AD017A651A4811A500A50E6A /* ReadData.m in Sources */,
 				AD996FCB1A418B9D009C27AF /* main.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  ConnectedDevice.h
+//  Peer.h
 //  peripheralAntennaTest
 //
 //  Created by John Rogers on 12/23/14.
@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 @import CoreBluetooth;
 
-@interface ConnectedDevice : NSObject
+@interface Peer : NSObject
 
 @property (strong, nonatomic) CBPeripheral *peripheral;
 @property (strong, nonatomic) CBCentral *central;
 @property (strong, nonatomic) NSString *peerID;
 @property (strong, nonatomic) NSMutableData *writeInProgress;
+@property (strong, nonatomic) NSMutableData *readInProgress;
 
 - (id)initWithDevice:(id)device;
 - (NSString*)deviceID;

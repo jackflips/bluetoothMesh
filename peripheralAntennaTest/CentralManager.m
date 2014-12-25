@@ -9,6 +9,10 @@
 #import "CentralManager.h"
 
 static NSString * const kIdentifier = @"89A66372-BCEE-4BB6-AC92-3A9C78ECA25E";
+static NSString * const kWriteCharacteristic = @"4D040DC8-6BDE-417D-AC70-DFF7FE2A6E89";
+static NSString * const kIdentityWriteCharacteristic = @"14CCA15E-7C40-4391-BC41-4D6C097C856A";
+static NSString * const kReadCharacteristic = @"C8B794F6-357A-4D0E-ADEF-60E16DFA971E";
+static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-72E830CEBD72";
 
 @implementation CentralManager
 
@@ -16,6 +20,7 @@ static NSString * const kIdentifier = @"89A66372-BCEE-4BB6-AC92-3A9C78ECA25E";
     self = [super init];
     _centralQueue = dispatch_queue_create("centralQueue", NULL);
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:_centralQueue];
+    _writeSendQueue = [NSMutableArray array];
     return self;
 }
 
@@ -41,23 +46,16 @@ static NSString * const kIdentifier = @"89A66372-BCEE-4BB6-AC92-3A9C78ECA25E";
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    ConnectedDevice *device = 
-    [self doubleConnectionGuard:device];
-    
-    NSLog(@"did discover peripheral");
-    NSLog(@"in connect method: %@", [self deviceForID:peripheral.identifier.UUIDString]);
-    if (![[self deviceForID:peripheral.identifier.UUIDString] central]) {
-        NSLog(@"should connect to %@", peripheral);
-        [central connectPeripheral:peripheral options:nil];
-        [_foundDevices addObject:[[ConnectedDevice alloc] initWithDevice:peripheral]];
-    } else {
-        NSLog(@"device already seen, not connecting.");
-    }
-    
+    Peer *peer = [[Connections sharedManager] getPeerForDevice:peripheral];
+    [[Connections sharedManager] doubleConnectionGuard:peer type:CentralGuard success:^() {
+        [_centralManager connectPeripheral:peer.peripheral options:nil];
+    } failure:^() {
+        NSLog(@"In CentralDidDiscoverPeripheral ConnectionGuard prevented connection.");
+    }];
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
-    NSLog(@"failed with error: %@",  error);
+    NSLog(@"Central failed to connect with error: %@",  error);
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
@@ -70,14 +68,137 @@ static NSString * const kIdentifier = @"89A66372-BCEE-4BB6-AC92-3A9C78ECA25E";
     NSLog(@"central did discover");
     NSArray *services = peripheral.services;
     [services enumerateObjectsUsingBlock:^(CBService *service, NSUInteger idx, BOOL *stop) {
-        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:kWriteCharacteristic], [CBUUID UUIDWithString:kReadCharacteristic], [CBUUID UUIDWithString:kIdentityReadCharacteristic], [CBUUID UUIDWithString:kIdentityWriteCharacteristic]] forService:service];
+        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:kReadCharacteristic], [CBUUID UUIDWithString:kIdentityReadCharacteristic], [CBUUID UUIDWithString:kWriteCharacteristic], [CBUUID UUIDWithString:kIdentityWriteCharacteristic]] forService:service];
     }];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
-    [self readIdentity:peripheral];
-    //[self subscribeToReadCharacteristic:peripheral];
+    Peer *peer = [[Connections sharedManager] getPeerForDevice:peripheral];
+    [self readIdentity:peer]; //don't double connection guard yet because we don't yet have an identity for the other device
 }
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    NSLog(@"DEBUG: Did update value for char: %@", characteristic.value);
+    
+    Peer *peer = [[Connections sharedManager] getPeerForDevice:peripheral];
+    peer.peripheral = peripheral;
+    if ([characteristic.UUID.UUIDString isEqualToString:kIdentityReadCharacteristic]) {
+        peer.peerID = [self dataToString:characteristic.value];
+        NSLog(@"read identity, %@", peer.peerID);
+        
+        [[Connections sharedManager] doubleConnectionGuard:peer type:CentralGuard success:^() {
+            NSLog(@"DEBUG: Subscribing to read characteristic");
+            [self subscribeToReadCharacteristic:peer];
+            [self writeIdentity:peer];
+            //Ready to send arbirary messages now.
+        } failure:^() {
+            NSLog(@"In didUpdate for Identity Char, shouldn't be central, disconnecting.");
+            [_centralManager cancelPeripheralConnection:peripheral];
+            return;
+        }];  
+    } else { //data characteristic
+        if (characteristic.value.length > 0) {
+            if (!peer.readInProgress) {
+                peer.readInProgress = [[NSMutableData alloc] init];
+            }
+            [peer.readInProgress appendData:characteristic.value];
+        } else { //finished reading data
+            NSLog(@"Finished reading data, %@", peer.readInProgress);
+            NSString *message = @"'Things could change, Gabe', Jonas went on. Things could be different. I don't know how, but there must be some way for things to be different. There could be colors.'";
+            NSData *messageData = [self stringToData:message];
+            [self writeMessage:messageData toPeer:peer];
+        }
+    }
+}
+
+- (void)writeMessage:(NSData*)message toPeer:(Peer*)peer {
+    [_writeSendQueue addObject:[[WriteData alloc] initWithPeripheral:peer.peripheral andData:message]];
+    if (_writeReadyToUpdate) {
+        [self sendNextWriteChunk];
+    }
+}
+
+- (void)writeIdentity:(Peer*)peer { //bug here - if the queue is backed up your identity won't be sent.
+    [peer.peripheral writeValue:[self stringToData:[[Connections sharedManager] identity]]
+                forCharacteristic:[self getIdentityWriteCharacteristicOfPeripheral:peer.peripheral] type:CBCharacteristicWriteWithResponse];
+}
+
+- (void)sendNextWriteChunk {
+    WriteData *writeData = [_writeSendQueue firstObject];
+    if (writeData) {
+        if (writeData.data.length > 0) {
+            _writeReadyToUpdate = NO;
+            NSUInteger lengthToIncremenent = 512 < writeData.data.length ? 512 : writeData.data.length;
+            NSData *chunk = [writeData.data subdataWithRange:NSMakeRange(0, lengthToIncremenent)];
+            NSInteger length = writeData.data.length - lengthToIncremenent;
+            if (length < 0) length = 0;
+            writeData.data = [[writeData.data subdataWithRange:NSMakeRange(lengthToIncremenent, length)] mutableCopy];
+            [writeData.peripheral writeValue:chunk forCharacteristic:[self getWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
+        } else {
+            [writeData.peripheral writeValue:[NSData data] forCharacteristic:[self getWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
+            [_writeSendQueue removeObjectAtIndex:0];
+            NSLog(@"finished writing.");
+        }
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+    _writeReadyToUpdate = YES;
+    [self sendNextWriteChunk];
+}
+
+- (void)readIdentity:(Peer*)peer {
+    for (CBService *service in peer.peripheral.services) {
+        for (CBCharacteristic *characteristic in service.characteristics) {
+            if ([characteristic.UUID.UUIDString isEqualToString:kIdentityReadCharacteristic]) {
+                [peer.peripheral readValueForCharacteristic:characteristic];
+            }
+        }
+    }
+}
+
+- (CBCharacteristic*)getCharacteristicOfType:(NSString*)type fromPeripheral:(CBPeripheral*)peripheral {
+    NSArray *services = peripheral.services;
+    for (CBService *service in services) {
+        for (CBCharacteristic *characteristic in service.characteristics) {
+            if ([characteristic.UUID.UUIDString isEqualToString:type]) {
+                return characteristic;
+            }
+        }
+    }
+    NSLog(@"Warning: Didn't find characteristic on peripheral %@ for type %@", peripheral, type);
+    return nil;
+}
+
+- (CBCharacteristic*)getWriteCharacteristicOfPeripheral:(CBPeripheral*)peripheral {
+    return [self getCharacteristicOfType:kWriteCharacteristic fromPeripheral:peripheral];
+}
+
+- (CBCharacteristic*)getIdentityWriteCharacteristicOfPeripheral:(CBPeripheral*)peripheral {
+    return [self getCharacteristicOfType:kIdentityWriteCharacteristic fromPeripheral:peripheral];
+}
+
+- (void)subscribeToReadCharacteristic:(Peer*)peer {
+    for (CBService *service in peer.peripheral.services) {
+        if ([service.UUID.UUIDString isEqualToString:kIdentifier]) {
+            for (CBCharacteristic *characteristic in service.characteristics) {
+                if ([characteristic.UUID.UUIDString isEqualToString:kReadCharacteristic]) {
+                    [peer.peripheral setNotifyValue:YES forCharacteristic:characteristic];
+                }
+            }
+        }
+    }
+}
+
+- (NSData*)stringToData:(NSString*)str {
+    return [str dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString*)dataToString:(NSData*)data {
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
 
 
 @end

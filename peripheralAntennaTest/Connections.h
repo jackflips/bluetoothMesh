@@ -7,14 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ConnectedDevice.h"
+#import "Peer.h"
+
+typedef NS_ENUM(NSInteger, ConnectionGuardType) {
+    CentralGuard,
+    PeripheralGuard
+};
 
 @interface Connections : NSObject
 
 @property (strong, nonatomic) NSMutableArray *connections;
+@property (strong, nonatomic) NSString *identity;
 
 + (instancetype)sharedManager;
 
-- (ConnectedDevice*)getPeerForDevice;
+- (Peer*)getPeerForDevice:(id)device;
+- (void)doubleConnectionGuard:(Peer*)peer type:(ConnectionGuardType)type success:(void (^)())success failure:(void (^)())failure;
 
 @end

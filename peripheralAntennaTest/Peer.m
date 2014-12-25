@@ -1,14 +1,14 @@
 //
-//  ConnectedDevice.m
+//  Peer.m
 //  peripheralAntennaTest
 //
 //  Created by John Rogers on 12/23/14.
 //  Copyright (c) 2014 jackrogers. All rights reserved.
 //
 
-#import "ConnectedDevice.h"
+#import "Peer.h"
 
-@implementation ConnectedDevice
+@implementation Peer
 
 - (id)initWithDevice:(id)device {
     self = [super init];
