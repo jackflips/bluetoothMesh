@@ -21,6 +21,7 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
     _peripheralQueue = dispatch_queue_create("peripheralQueue", NULL);
     _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:_peripheralQueue];
     _readSendQueue = [NSMutableArray array];
+    _readReadyToUpdate = YES;
     return self;
 }
 
@@ -63,14 +64,12 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
-    NSLog(@"DEBUG: Peer did subscribe to characteristic");
     Peer *peer = [[Connections sharedManager] getPeerForDevice:central];
     [[Connections sharedManager] doubleConnectionGuard:peer type:PeripheralGuard success:^{
         NSString *currentValue = @"Sixty seconds. That's how long we're required to stand on our metal circles before the sound of a gong releases us. Step off before the minute is up, and land mines blow your legs off.";
         NSLog(@"data to send: %@", [self stringToData:currentValue]);
         [_readSendQueue addObject:[[ReadData alloc] initWithCentral:central andData:[[self stringToData:currentValue] mutableCopy]]];
         if (_readReadyToUpdate) {
-            NSLog(@"DEBUG: Ready to update at first, send.");
             [self sendNextReadChunk];
         }
     } failure:^{
@@ -80,7 +79,6 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 }
 
 - (void)sendNextReadChunk {
-    NSLog(@"DEBUG: Sending next read chunk.");
     ReadData *readData = [_readSendQueue firstObject];
     if (readData) {
         _readReadyToUpdate = NO;
@@ -125,7 +123,7 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
                     [peer.writeInProgress appendData:request.value];
                     [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
                 } else {
-                    NSLog(@"Received full write: %@", peer.writeInProgress);
+                    NSLog(@"Received full write: %@", [self dataToString:peer.writeInProgress]);
                     [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
                 }
             }

@@ -21,6 +21,7 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
     _centralQueue = dispatch_queue_create("centralQueue", NULL);
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:_centralQueue];
     _writeSendQueue = [NSMutableArray array];
+    _writeReadyToUpdate = YES;
     return self;
 }
 
@@ -79,8 +80,6 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    NSLog(@"DEBUG: Did update value for char: %@", characteristic.value);
-    
     Peer *peer = [[Connections sharedManager] getPeerForDevice:peripheral];
     peer.peripheral = peripheral;
     if ([characteristic.UUID.UUIDString isEqualToString:kIdentityReadCharacteristic]) {
@@ -88,7 +87,6 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
         NSLog(@"read identity, %@", peer.peerID);
         
         [[Connections sharedManager] doubleConnectionGuard:peer type:CentralGuard success:^() {
-            NSLog(@"DEBUG: Subscribing to read characteristic");
             [self subscribeToReadCharacteristic:peer];
             [self writeIdentity:peer];
             //Ready to send arbirary messages now.
@@ -104,7 +102,7 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
             }
             [peer.readInProgress appendData:characteristic.value];
         } else { //finished reading data
-            NSLog(@"Finished reading data, %@", peer.readInProgress);
+            NSLog(@"Finished reading data, %@", [self dataToString:peer.readInProgress]);
             NSString *message = @"'Things could change, Gabe', Jonas went on. Things could be different. I don't know how, but there must be some way for things to be different. There could be colors.'";
             NSData *messageData = [self stringToData:message];
             [self writeMessage:messageData toPeer:peer];
