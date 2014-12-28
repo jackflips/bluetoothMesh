@@ -83,6 +83,9 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
     Peer *peer = [[Connections sharedManager] getPeerForDevice:peripheral];
     peer.peripheral = peripheral;
     if ([characteristic.UUID.UUIDString isEqualToString:kIdentityReadCharacteristic]) {
+        if ([self dataToString:characteristic.value].length < 1) { //sometimes it reads an empty identity. Not sure why.
+            return;
+        }
         peer.peerID = [self dataToString:characteristic.value];
         NSLog(@"read identity, %@", peer.peerID);
         
@@ -103,23 +106,22 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
             [peer.readInProgress appendData:characteristic.value];
         } else { //finished reading data
             NSLog(@"Finished reading data, %@", [self dataToString:peer.readInProgress]);
-            NSString *message = @"'Things could change, Gabe', Jonas went on. Things could be different. I don't know how, but there must be some way for things to be different. There could be colors.'";
-            NSData *messageData = [self stringToData:message];
-            [self writeMessage:messageData toPeer:peer];
+            [_delegate receivedMessage:[self dataToString:peer.readInProgress] peer:peer.peerID];
+            peer.readInProgress = nil;
         }
     }
 }
 
-- (void)writeMessage:(NSData*)message toPeer:(Peer*)peer {
-    [_writeSendQueue addObject:[[WriteData alloc] initWithPeripheral:peer.peripheral andData:message]];
+- (void)writeMessage:(NSData*)message toPeer:(Peer*)peer onCharacteristic:(NSString*)characteristic {
+    [_writeSendQueue addObject:[[WriteData alloc] initWithPeripheral:peer.peripheral data:message andCharacteristic:characteristic]];
     if (_writeReadyToUpdate) {
         [self sendNextWriteChunk];
     }
 }
 
-- (void)writeIdentity:(Peer*)peer { //bug here - if the queue is backed up your identity won't be sent.
-    [peer.peripheral writeValue:[self stringToData:[[Connections sharedManager] identity]]
-                forCharacteristic:[self getIdentityWriteCharacteristicOfPeripheral:peer.peripheral] type:CBCharacteristicWriteWithResponse];
+- (void)writeIdentity:(Peer*)peer {
+    [self writeMessage:[self stringToData:[[Connections sharedManager] identity]] toPeer:peer onCharacteristic:kIdentityWriteCharacteristic];
+    [_writeSendQueue removeObjectAtIndex:0];
 }
 
 - (void)sendNextWriteChunk {
@@ -132,11 +134,15 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
             NSInteger length = writeData.data.length - lengthToIncremenent;
             if (length < 0) length = 0;
             writeData.data = [[writeData.data subdataWithRange:NSMakeRange(lengthToIncremenent, length)] mutableCopy];
-            [writeData.peripheral writeValue:chunk forCharacteristic:[self getWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
-        } else {
+            if ([writeData.characteristicID isEqualToString:kIdentityWriteCharacteristic]) {
+                [writeData.peripheral writeValue:chunk forCharacteristic:[self getIdentityWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
+            } else if ([writeData.characteristicID isEqualToString:kWriteCharacteristic]) {
+                [writeData.peripheral writeValue:chunk forCharacteristic:[self getWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
+            }
+            
+        } else if (writeData.characteristicID == kWriteCharacteristic) { //only end with empty data if its a data write
             [writeData.peripheral writeValue:[NSData data] forCharacteristic:[self getWriteCharacteristicOfPeripheral:writeData.peripheral] type:CBCharacteristicWriteWithResponse];
             [_writeSendQueue removeObjectAtIndex:0];
-            NSLog(@"finished writing.");
         }
     }
 }
@@ -195,6 +201,10 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 
 - (NSString*)dataToString:(NSData*)data {
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (void)sendMessage:(NSString*)message toPeer:(Peer *)peer {
+    [self writeMessage:[self stringToData:message] toPeer:peer onCharacteristic:kWriteCharacteristic];
 }
 
 

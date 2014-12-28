@@ -8,13 +8,14 @@
 
 
 #import <UIKit/UIKit.h>
-#import "CentralManager.h"
-#import "PeripheralManager.h"
+#import "ConnectionManager.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConnectionManagerDelegate>
 
-@property (strong, nonatomic) CentralManager *central;
-@property (strong, nonatomic) PeripheralManager *peripheral;
+@property (strong, nonatomic) NSMutableArray *tableSource;
+@property (strong, nonatomic) IBOutlet UITextField *messageForm;
+@property (strong, nonatomic) IBOutlet UITableView *messagesTableView;
+@property (strong, nonatomic) ConnectionManager *connectionManager;
 
 @end
 

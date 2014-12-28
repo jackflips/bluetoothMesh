@@ -20,6 +20,14 @@
     return self;
 }
 
+- (void)addDevice:(id)device {
+    if ([device isKindOfClass:[CBPeripheral class]] && _peripheral == nil) {
+        _peripheral = device;
+    } else if ([device isKindOfClass:[CBCentral class]] && _central == nil) {
+        _central = device;
+    }
+}
+
 - (NSString*)deviceID {
     if (_peripheral) {
         CBUUID *identifier = (CBUUID*)[_peripheral identifier];

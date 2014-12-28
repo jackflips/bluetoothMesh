@@ -10,10 +10,11 @@
 
 @implementation WriteData
 
-- (id)initWithPeripheral:(CBPeripheral*)peripheral andData:(NSData*)data {
+- (id)initWithPeripheral:(CBPeripheral*)peripheral data:(NSData*)data andCharacteristic:characteristic {
     self = [super init];
     _peripheral = peripheral;
     _data = [data mutableCopy];
+    _characteristicID = characteristic;
     return self;
 }
 

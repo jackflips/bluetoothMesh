@@ -23,5 +23,6 @@ typedef NS_ENUM(NSInteger, ConnectionGuardType) {
 
 - (Peer*)getPeerForDevice:(id)device;
 - (void)doubleConnectionGuard:(Peer*)peer type:(ConnectionGuardType)type success:(void (^)())success failure:(void (^)())failure;
+- (void)is:(Peer*)peer central:(void(^)())central orPeripheral:(void (^)())peripheral;
 
 @end

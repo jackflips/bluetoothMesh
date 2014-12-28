@@ -65,17 +65,6 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
     Peer *peer = [[Connections sharedManager] getPeerForDevice:central];
-    [[Connections sharedManager] doubleConnectionGuard:peer type:PeripheralGuard success:^{
-        NSString *currentValue = @"Sixty seconds. That's how long we're required to stand on our metal circles before the sound of a gong releases us. Step off before the minute is up, and land mines blow your legs off.";
-        NSLog(@"data to send: %@", [self stringToData:currentValue]);
-        [_readSendQueue addObject:[[ReadData alloc] initWithCentral:central andData:[[self stringToData:currentValue] mutableCopy]]];
-        if (_readReadyToUpdate) {
-            [self sendNextReadChunk];
-        }
-    } failure:^{
-        NSLog(@"Double connection, should not be peripheral, not sending anything.");
-        peer.central = nil;
-    }];
 }
 
 - (void)sendNextReadChunk {
@@ -94,24 +83,27 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
         } else {
             [_peripheralManager updateValue:[NSData data] forCharacteristic:_readCharacteristic onSubscribedCentrals:@[readData.central]];
             [_readSendQueue removeObjectAtIndex:0];
+            _readReadyToUpdate = YES; //peripheralManagerIsReadyToUpdate doesn't get called after sending an empty data, might be bug though.
             NSLog(@"done sending data!");
+            [self sendNextReadChunk];
         }
     }
 }
 
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral {
+    NSLog(@"ready to update");
     _readReadyToUpdate = YES;
     [self sendNextReadChunk];
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests {
     [requests enumerateObjectsUsingBlock:^(CBATTRequest* request, NSUInteger idx, BOOL *stop) {
-        //NSLog(@"received write request, %@, val: %@", peripheral, [(CBATTRequest*)[requests objectAtIndex:0] value]);
         
         Peer *peer = [[Connections sharedManager] getPeerForDevice:request.central];
         if ([request.characteristic.UUID.UUIDString isEqualToString:kIdentityWriteCharacteristic]) {
             NSLog(@"received identity from write: %@", [self dataToString:request.value]);
             peer.peerID = [self dataToString:request.value];
+            [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
         } else if ([request.characteristic.UUID.UUIDString isEqualToString:kWriteCharacteristic]) {
             if (!peer.writeInProgress) {
                 peer.writeInProgress = [[NSMutableData alloc] init];
@@ -124,6 +116,8 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
                     [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
                 } else {
                     NSLog(@"Received full write: %@", [self dataToString:peer.writeInProgress]);
+                    [_delegate receivedMessage:[self dataToString:peer.writeInProgress] peer:peer.peerID];
+                    peer.writeInProgress = nil;
                     [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
                 }
             }
@@ -132,8 +126,10 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request {
-    
     Peer *peer = [[Connections sharedManager] getPeerForDevice:request.central];
+    for (Peer *peer in [[Connections sharedManager] connections]) {
+        NSLog(@"In Periph did receive read request: %@ %@ %@", peer, peer.peripheral, peer.central);
+    }
     [[Connections sharedManager] doubleConnectionGuard:peer type:PeripheralGuard success:^{
         if ([request.characteristic.UUID.UUIDString isEqualToString:kIdentityReadCharacteristic]) {
             if (request.offset > request.characteristic.value.length) {
@@ -156,6 +152,17 @@ static NSString * const kIdentityReadCharacteristic = @"EDB06B2B-EFEC-45B2-90C3-
 
 - (NSString*)dataToString:(NSData*)data {
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (void)sendMessage:(NSString*)message toPeer:(Peer *)peer {
+    NSLog(@"sending message on peripheral manager");
+    NSLog(@"readsendqueue before: %lu", (unsigned long)_readSendQueue.count);
+    [_readSendQueue addObject:[[ReadData alloc] initWithCentral:peer.central andData:[[self stringToData:message] mutableCopy]]];
+    NSLog(@"readsendqueue after: %lu", (unsigned long)_readSendQueue.count);
+    if (_readReadyToUpdate) {
+        NSLog(@"send next read chunk");
+        [self sendNextReadChunk];
+    }
 }
 
 

@@ -21,6 +21,7 @@
 		AD996FE51A418B9E009C27AF /* peripheralAntennaTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD996FE41A418B9E009C27AF /* peripheralAntennaTestTests.m */; };
 		AD996FEF1A418BB5009C27AF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */; };
 		ADD663B31A4A0FD500E1BD9D /* Peer.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD663B21A4A0FD500E1BD9D /* Peer.m */; };
+		ADF513141A4E4B550070D786 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF513131A4E4B550070D786 /* ConnectionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		AD996FEE1A418BB5009C27AF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		ADD663B11A4A0FD500E1BD9D /* Peer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Peer.h; sourceTree = "<group>"; };
 		ADD663B21A4A0FD500E1BD9D /* Peer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Peer.m; sourceTree = "<group>"; };
+		ADF513121A4E4B550070D786 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
+		ADF513131A4E4B550070D786 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				AD7485BC1A4BEF5D005DFFC9 /* CentralManager.m */,
 				AD7485C41A4CAA6C005DFFC9 /* PeripheralManager.h */,
 				AD7485C51A4CAA6C005DFFC9 /* PeripheralManager.m */,
+				ADF513121A4E4B550070D786 /* ConnectionManager.h */,
+				ADF513131A4E4B550070D786 /* ConnectionManager.m */,
 				AD996FCC1A418B9D009C27AF /* AppDelegate.h */,
 				AD996FCD1A418B9D009C27AF /* AppDelegate.m */,
 				AD996FCF1A418B9E009C27AF /* ViewController.h */,
@@ -261,6 +266,7 @@
 				AD7485C61A4CAA6C005DFFC9 /* PeripheralManager.m in Sources */,
 				AD7485BD1A4BEF5D005DFFC9 /* CentralManager.m in Sources */,
 				ADD663B31A4A0FD500E1BD9D /* Peer.m in Sources */,
+				ADF513141A4E4B550070D786 /* ConnectionManager.m in Sources */,
 				AD017A651A4811A500A50E6A /* ReadData.m in Sources */,
 				AD996FCB1A418B9D009C27AF /* main.m in Sources */,
 			);

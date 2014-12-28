@@ -31,6 +31,7 @@
     NSString *idOfDevice = identifier.UUIDString;
     for (Peer *peer in _connections) {
         if ([[peer deviceID] isEqualToString:idOfDevice]) {
+            [peer addDevice:device];
             return peer;
         }
     }
@@ -42,26 +43,39 @@
 }
 
 - (void)doubleConnectionGuard:(Peer*)peer type:(ConnectionGuardType)type success:(void (^)())success failure:(void (^)())failure {
+    NSLog(@"Double connection guard for peer %@", peer.peerID);
     if (!peer.peripheral && !peer.central) {
         success();
-    } else if (peer.peripheral && type == CentralGuard) {
+    } else if (peer.peripheral && !peer.central && type == CentralGuard) {
         success();
     } else if (!peer.peerID) {
-        success();
+        success(); //bug here, should be failure, do a different check for id requests
     } else if (peer.peripheral && peer.central) {
         if ([peer.peerID caseInsensitiveCompare:_identity] == NSOrderedAscending) {
+            NSLog(@"GUARD for %@ - Device should be CENTRAL", peer.peerID);
             if (type == CentralGuard) {
                 success();
             } else if (type == PeripheralGuard) {
                 failure();
             }
         } else {
+            NSLog(@"GUARD for %@ - Device should be PERIPHERAL", peer.peerID);
             if (type == CentralGuard) {
                 failure();
             } else if (type == PeripheralGuard) {
                 success();
             }
         }
+    } else {
+        NSLog(@"fell through");
+    }
+}
+
+- (void)is:(Peer*)peer central:(void(^)())central orPeripheral:(void (^)())peripheral {
+    if (peer.peerID.length < 1) {
+        return;
+    } else {
+        [self doubleConnectionGuard:peer type:CentralGuard success:central failure:peripheral];
     }
 }
 

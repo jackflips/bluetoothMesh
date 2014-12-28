@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableData *readInProgress;
 
 - (id)initWithDevice:(id)device;
+- (void)addDevice:(id)device;
 - (NSString*)deviceID;
 
 @end

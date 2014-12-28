@@ -13,7 +13,8 @@
 
 @property (nonatomic, strong) CBPeripheral *peripheral;
 @property (nonatomic, strong) NSMutableData *data;
+@property (nonatomic, strong) NSString *characteristicID;
 
-- (id)initWithPeripheral:(CBPeripheral*)peripheral andData:(NSData*)data;
+- (id)initWithPeripheral:(CBPeripheral*)peripheral data:(NSData*)data andCharacteristic:characteristic;
 
 @end
